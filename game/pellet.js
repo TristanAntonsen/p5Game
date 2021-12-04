@@ -7,6 +7,7 @@ class Pellet {
         this.length = 10;
         this.explode = false;
         this.explodeCounter = 0;
+        this.color = color(random(255),random(255),random(255))
     }
 
     calcDirection() {
@@ -52,9 +53,11 @@ class Pellet {
 
     draw() {
         noStroke();
-        fill("#0F8B8D")
+        // fill("#0F8B8D")
+        fill(this.color)
         if (this.explode == true) {
-            fill(200)
+            // fill(200)
+            fill(this.color)
             ellipse(this.position.x, this.position.y, 8, 8)
         } else if(!this.explode){
             ellipse(this.position.x, this.position.y, 10, 10)

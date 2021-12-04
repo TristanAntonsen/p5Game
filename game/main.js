@@ -1,4 +1,4 @@
-const height = 500;
+const height = 700;
 const width = height * 1.5;
 const startingX = width / 20;
 const startingY = height / 2;
@@ -31,9 +31,10 @@ let colliderSize = 50;
 let numColliders = 10;
 let colliderPositions = []
 let Nc = 0
+let groundLevel = 300;
 
 for (let x = 0; x < width; x += colliderSize) {
-  for (let y = 100; y < (height - 200); y += colliderSize) {
+  for (let y = 100; y < (groundLevel); y += colliderSize) {
     gridPositions.push([x, y])
   }
 }
@@ -48,13 +49,14 @@ let pellets = []
 
 let collisionCounter = 0;
 
+
 function setup() {
   // put setup code here
   createCanvas(width, height)
   player = new Player(startingX, startingY, playerColor)
 
   //Ground
-  colliders.push(new GroundCollider(0, 300, width, height - 300, 0, 0, 100, 0))
+  colliders.push(new GroundCollider(0, groundLevel, width, height - groundLevel, 0, 0, 100, 0))
 
   // colliders.push(new Collider(100,250,50,50))
   // for (let i = 0; i < numColliders; i++) {

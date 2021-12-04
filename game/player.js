@@ -139,7 +139,6 @@ class Player {
     }
 
     draw() {
-        console.log(this.netForce.mag())
         let eyeOffset = 3;
         let eyeLX = this.position.x - this.width * .20 + eyeOffset * this.facing;
         let eyeRX = this.position.x + this.width * .20 + eyeOffset * this.facing;
