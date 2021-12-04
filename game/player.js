@@ -16,6 +16,7 @@ class Player {
         this.facing = 1;
         this.lastPos = createVector()
         this.ySpeed = 0;
+        this.sneak = false;
 
 
     }
@@ -46,6 +47,12 @@ class Player {
         } else {
             this.moveR = false;
         }
+
+        if (keyIsDown(16)) {
+            this.sneak = true;
+        } else {
+            this.sneak = false;
+        }
     }
 
     sumAllForces() {
@@ -61,8 +68,13 @@ class Player {
         //Jumping
         if (keyIsDown(32) | keyIsDown(38) | keyIsDown(87)) {
             if (this.canJump) {
-                this.netForce.y -= jumpForce;
-                this.canJump = false;
+                if (this.sneak) {
+                    this.netForce.y -= jumpForce / 2;
+                    this.canJump = false;
+                } else {
+                    this.netForce.y -= jumpForce;
+                    this.canJump = false;
+                }
             }
         }
 
@@ -108,7 +120,12 @@ class Player {
         this.lastY = this.position.y;
 
         //MAIN UPDATE
-        this.position.add(this.netForce);
+        if (this.sneak) {
+            this.netForce.x /= 2; //divide x force by 2, not sure if this is the best way to do it
+            this.position.add(this.netForce);
+        } else {
+            this.position.add(this.netForce);
+        }
 
         //Speed
         this.ySpeed = Math.abs(this.position.y - this.lastY) / 20;
@@ -171,21 +188,11 @@ class Player {
         if (numCollisions > 0) {
 
             newPos = closestRectPoint(this.position, hitCollider.corners);
-            // console.log(newPos)
             this.inCollider = true;
             floor = floor + 2;
             this.position.y = floor;
-            // if (this.inCollider) {
-            //     this.position = PosAfterCollide(newPos,hitCollider);
-            //     // this.position = newPos;
-            //     if(this.aboveCollider){
-            //         this.position.y += 1;
-            //     }
-            // }
             this.canJump = true;
             hitCollider.hit = true;
-            // ellipse(newPos.x, newPos.y, 10)
-
         }
 
     }
