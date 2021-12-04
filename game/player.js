@@ -61,6 +61,7 @@ class Player {
         if (!this.inCollider) {
             this.netForce.y += gravity;
             this.moveForce = 0;
+            this.sneak = false;
 
         } else {
             this.netForce.y = 0;
@@ -104,9 +105,9 @@ class Player {
                 this.netForce.x += deceleration;
             }
 
-            if (Math.abs(this.netForce.x) < .1) {
-                this.netForce.x = 0;
-            }
+            // if (Math.abs(this.netForce.x) < .1) {
+            //     this.netForce.x = 0;
+            // }
         }
     }
 
@@ -119,9 +120,15 @@ class Player {
         //vf += f
         this.lastY = this.position.y;
 
+        //PREVENTING DRIFT
+
+        if (Math.abs(this.netForce.x) < 1) { //doing this twice, probably not efficient
+            this.netForce.x = 0;
+        }
+
         //MAIN UPDATE
-        if (this.sneak) {
-            this.netForce.x /= 2; //divide x force by 2, not sure if this is the best way to do it
+        if (this.sneak ) {
+            this.netForce.x *= .625; //divide x force by 2, not sure if this is the best way to do it
             this.position.add(this.netForce);
         } else {
             this.position.add(this.netForce);
@@ -132,6 +139,7 @@ class Player {
     }
 
     draw() {
+        console.log(this.netForce.mag())
         let eyeOffset = 3;
         let eyeLX = this.position.x - this.width * .20 + eyeOffset * this.facing;
         let eyeRX = this.position.x + this.width * .20 + eyeOffset * this.facing;
