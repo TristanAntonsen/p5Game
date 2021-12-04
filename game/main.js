@@ -28,10 +28,10 @@ let colliders = []
 
 let gridPositions = []
 let colliderSize = 50;
-let numColliders = 10;
+let numColliders = 25;
 let colliderPositions = []
 let Nc = 0
-let groundLevel = 300;
+let groundLevel = height * .5;
 
 for (let x = 0; x < width; x += colliderSize) {
   for (let y = 100; y < (groundLevel); y += colliderSize) {
@@ -58,20 +58,6 @@ function setup() {
   //Ground
   colliders.push(new GroundCollider(0, groundLevel, width, height - groundLevel, 0, 0, 100, 0))
 
-  // colliders.push(new Collider(100,250,50,50))
-  // for (let i = 0; i < numColliders; i++) {
-  //   let gridPosition = gridPositions[Math.floor(random(gridPositions.length))]
-  //   colliders.push(new Collider(gridPosition[0], gridPosition[1], colliderSize * .95, colliderSize * .95, 5, random(255), random(100), random(100)))
-  // }
-
-  // for(let gridPosition of gridPositions){
-  //   let f = noise(gridPosition[0],gridPosition[1])
-  //   if(f > 0.75){
-  //     colliders.push(new Collider(gridPosition[0], gridPosition[1], colliderSize * .95, colliderSize * .95, 5, random(255), random(100), random(100)))
-  //     colliderPositions.push(gridPosition);
-  //   }
-  // }
-
   while (Nc < numColliders) {
     let gridPosition = gridPositions[Math.floor(random(gridPositions.length))]
     if (!colliderPositions.includes(gridPosition)) {
@@ -82,9 +68,6 @@ function setup() {
       continue
     }
   }
-
-
-
 }
 
 function draw() {
@@ -97,10 +80,6 @@ function draw() {
   rectMode(CORNER);
 
   //PHYSICS PARAMETERS
-
-  // moveForce = moveForceBase*deltaTime;
-
-
 
   for (let collider of colliders) {
     collider.draw();
@@ -126,7 +105,7 @@ function draw() {
       pellets = [];
       Nc = 0;
       //Ground
-      colliders.push(new GroundCollider(0, 300, width, height - 300, 0, 0, 100, 0))
+      colliders.push(new GroundCollider(0, groundLevel, width, height - 300, 0, 0, 100, 0))
       //Allows duplicates
       // for (let i = 0; i < numColliders; i++) {
       //   let gridPosition = gridPositions[Math.floor(random(gridPositions.length))]

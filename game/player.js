@@ -3,8 +3,7 @@ class Player {
     constructor(_x, _y, _color) {
         this.position = createVector(_x, _y)
         this.netForce = createVector();
-        this.height = 40;
-        this.width = 15;
+        this.size = 15;
         this.inBounds = true;
         this.playerColor = _color;
 
@@ -23,15 +22,15 @@ class Player {
 
 
     edges() {
-        if (this.position.x > width - this.width) {
-            this.position.x = width - this.width;
-        } else if (this.position.x < this.width) {
-            this.position.x = this.width;
+        if (this.position.x > width - this.size) {
+            this.position.x = width - this.size;
+        } else if (this.position.x < this.size) {
+            this.position.x = this.size;
         }
         if (this.position.y > height) {
             this.position.y = height;
-        } else if (this.position.y < this.width + 2) {
-            this.position.y = this.width + 2;
+        } else if (this.position.y < this.size + 2) {
+            this.position.y = this.size + 2;
         }
     }
 
@@ -140,15 +139,15 @@ class Player {
 
     draw() {
         let eyeOffset = 3;
-        let eyeLX = this.position.x - this.width * .20 + eyeOffset * this.facing;
-        let eyeRX = this.position.x + this.width * .20 + eyeOffset * this.facing;
-        let eyeLY = this.position.y - this.width * 1.5 / 2 - this.width * (this.ySpeed / 2)
-        let eyeRY = this.position.y - this.width * 1.5 / 2 - this.width * (this.ySpeed / 2)
-        let eyeD = this.width / 2.5;
+        let eyeLX = this.position.x - this.size * .20 + eyeOffset * this.facing;
+        let eyeRX = this.position.x + this.size * .20 + eyeOffset * this.facing;
+        let eyeLY = this.position.y - this.size * 1.5 / 2 - this.size * (this.ySpeed / 2)
+        let eyeRY = this.position.y - this.size * 1.5 / 2 - this.size * (this.ySpeed / 2)
+        let eyeD = this.size / 2.5;
         fill(this.playerColor);
         noStroke();
         rectMode(CENTER)
-        ellipse(this.position.x, this.position.y - this.width / 2 - 2, this.width * (1 - this.ySpeed / 3), this.width * (1 + this.ySpeed))
+        ellipse(this.position.x, this.position.y - this.size / 2 - 2, this.size * (1 - this.ySpeed / 3), this.size * (1 + this.ySpeed))
         fill(255)
         stroke(this.playerColor);
         strokeWeight(1);
